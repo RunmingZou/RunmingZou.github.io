@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Runming Zou (邹润明) - Personal Homepage">
+  <title>Runming Zou (邹润明) - Homepage</title>
+
+  <!--
+    ============================================================
+    如何自定义这个个人主页
+    ============================================================
+    1. 全局信息：搜索 "TODO" 即可找到所有需要替换的地方。
+    2. 主题色：修改下方 :root 里的 --accent 变量即可整体换色。
+    3. 头像：在 images/ 目录放一张照片，改名为 avatar.jpg；
+       或直接把下方 <div class="author-avatar"> 里的 SVG 替换为
+       <img src="images/avatar.jpg" alt="头像">。
+    4. 论文列表：每个 <li class="pub-item"> 是一篇论文，复制一份改文字即可。
+    5. 部署：本文件为纯 HTML，可直接双击打开；也可整包上传到
+       GitHub Pages / Gitee Pages / 任意静态托管。
+    ============================================================
+  -->
+
+  <style>
+    :root{
+      --text:#343a40;            /* 正文颜色 */
+      --heading:#292d35;         /* 标题颜色 */
+      --accent:#315b7d;          /* 强调色（链接/高亮），改这里换主题色 */
+      --accent-soft:#eef3f8;     /* 强调色的浅色背景 */
+      --muted:#667085;           /* 次要文字 */
+      --muted-light:#7d8597;     /* 图标/更浅文字 */
+      --border:#e9ecef;          /* 边框 */
+      --bg:#ffffff;              /* 页面背景 */
+      --code-bg:#fafafa;
+      --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      --font-mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+      --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:72px}
+    body{
+      margin:0;padding:0;color:var(--text);background:var(--bg);
+      font-family:var(--font-sans);font-size:16px;line-height:1.65;
+      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    h1,h2,h3,h4,h5,h6{margin:1.5em 0 .55em;color:var(--heading);line-height:1.3;font-weight:600}
+    h1{font-size:1.6em}h2{font-size:1.3em}h3{font-size:1.1em}h4{font-size:1em}
+    p{margin:0 0 .9em}
+    ul,ol{margin:0 0 .9em}
+    img{max-width:100%;height:auto;border:0;vertical-align:middle}
+    hr{border:0;border-top:1px solid var(--border);margin:1.5em 0}
+    ::selection{background:var(--accent);color:#fff}
+    code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);
+      border:1px solid #f0f1f3;border-radius:4px;padding:.1em .35em}
+    .container{max-width:1080px;margin:0 auto;padding:0 20px}
+
+    /* ===== 顶部导航 ===== */
+    .masthead{
+      position:sticky;top:0;z-index:100;background:var(--bg);
+      border-bottom:1px solid var(--border);
+    }
+    .masthead__inner{display:flex;align-items:center;justify-content:space-between;
+      max-width:1080px;margin:0 auto;padding:12px 20px;gap:16px}
+    .site-title{font-weight:600;color:var(--heading);font-size:1.02em;line-height:1.3}
+    .site-title a{color:inherit}
+    .site-title a:hover{text-decoration:none;color:var(--accent)}
+    .nav{display:flex;align-items:center;gap:2px}
+    .nav a{color:var(--heading);font-weight:500;padding:8px 12px;border-radius:6px;
+      font-size:.95em;white-space:nowrap}
+    .nav a:hover{background:var(--accent-soft);color:var(--accent);text-decoration:none}
+    .nav a.active{color:var(--accent);background:var(--accent-soft)}
+    .nav-toggle{display:none;background:none;border:1px solid var(--border);border-radius:6px;
+      padding:6px 10px;font-size:1.2em;color:var(--heading);cursor:pointer;line-height:1}
+    @media (max-width:820px){
+      .nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;
+        align-items:stretch;background:var(--bg);border-bottom:1px solid var(--border);
+        padding:8px 12px;gap:2px}
+      .nav.open{display:flex}
+      .nav-toggle{display:block}
+    }
+
+    /* ===== 主内容 ===== */
+    main{max-width:1080px;margin:0 auto;padding:32px 20px 60px}
+    section{margin-bottom:48px}
+    .section-title{display:flex;align-items:center;gap:10px;margin:0 0 20px;
+      padding-bottom:.45em;border-bottom:1px solid var(--border)}
+    .section-title h2{margin:0;font-size:1.45em;font-weight:600;color:var(--heading)}
+    .section-title .bar{width:5px;height:24px;background:var(--accent);border-radius:3px}
+
+    /* ===== 作者卡片 ===== */
+    .author-profile{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;
+      padding:8px 0 8px;margin-bottom:8px}
+    .author-avatar{flex:0 0 auto;width:150px;height:150px;border-radius:50%;
+      background:var(--accent-soft);border:3px solid var(--border);
+      display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .author-avatar svg{width:82px;height:82px;fill:var(--accent)}
+    .author-avatar img{width:100%;height:100%;object-fit:cover}
+    .author-info{flex:1 1 300px;min-width:260px}
+    .author-name{font-size:1.9em;font-weight:700;color:var(--heading);margin:0 0 4px;line-height:1.2}
+    .author-title{font-size:1.05em;color:var(--heading);margin:0 0 2px}
+    .author-location{color:var(--muted);font-size:.95em;margin:0 0 14px}
+    .author-links{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+    .author-links a{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;
+      border:1px solid var(--border);border-radius:999px;color:var(--heading);
+      font-size:.88em;transition:.15s}
+    .author-links a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none;background:var(--accent-soft)}
+    .author-links svg{width:14px;height:14px;fill:var(--muted-light);flex:0 0 auto}
+    .author-links a:hover svg{fill:var(--accent)}
+    .author-cite{color:var(--muted);font-size:.95em}
+    .author-cite strong{color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+
+    /* ===== 简介区（About 引言） ===== */
+    .intro-block{max-width:52rem;padding:4px 0 12px}
+    .intro-summary{font-size:1.05em;color:var(--heading);line-height:1.75;margin-bottom:12px;text-align:justify}
+    .intro-contact{color:var(--muted);font-size:.88em;line-height:1.6}
+    .intro-contact span{color:var(--heading);font-weight:500}
+
+    /* ===== News 时间线 ===== */
+    .timeline{list-style:none;margin:0;padding:0;position:relative}
+    .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;
+      width:2px;background:var(--border)}
+    .timeline li{position:relative;padding:0 0 16px 30px}
+    .timeline li::before{content:"";position:absolute;left:3px;top:7px;width:10px;height:10px;
+      border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+    .timeline .date{font-weight:600;color:var(--accent);font-size:.92em;margin-right:6px;
+      font-variant-numeric:tabular-nums}
+    .timeline .text{color:var(--text)}
+    .timeline .tag{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;
+      font-size:.75em;font-weight:600;color:#fff;background:var(--accent);vertical-align:1px}
+
+    /* ===== Publications ===== */
+    .pub-note{color:var(--muted);font-size:.88em;margin:-4px 0 20px}
+    .pub-note em{color:var(--text);font-style:normal}
+    .pub-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 18px}
+    .pub-tab{padding:7px 15px;border:1px solid var(--border);border-radius:999px;
+      background:var(--bg);color:var(--heading);font-size:.9em;cursor:pointer;
+      transition:.15s;font-family:inherit}
+    .pub-tab:hover{border-color:var(--accent);color:var(--accent)}
+    .pub-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    .pub-group{display:none}
+    .pub-group.active{display:block}
+    .pub-list{list-style:none;margin:0;padding:0}
+    .pub-item{padding:18px 20px;border:1px solid var(--border);border-radius:10px;
+      margin-bottom:14px;background:var(--bg);box-shadow:var(--shadow);transition:.15s}
+    .pub-item:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:#d8dee6}
+    .pub-title{font-weight:600;color:var(--heading);font-size:1.03em;margin-bottom:4px}
+    .pub-title a{color:inherit}
+    .pub-title a:hover{color:var(--accent)}
+    .pub-authors{font-size:.93em;color:var(--text);margin-bottom:2px}
+    .pub-authors .me{font-weight:700;color:var(--accent)}
+    .pub-meta{font-size:.88em;color:var(--muted);margin-bottom:10px;font-style:italic}
+    .pub-badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.72em;
+      font-weight:600;font-style:normal;background:#fff3cd;color:#7a5a00;margin-left:6px}
+    .pub-badge.hot{background:#fde2e2;color:#a33}
+    .pub-links{display:flex;flex-wrap:wrap;gap:8px}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:6px;
+      font-size:.85em;font-weight:500;transition:.15s}
+    .btn-solid{background:var(--accent);color:#fff}
+    .btn-solid:hover{background:#264a66;text-decoration:none;color:#fff}
+    .btn-outline{border:1px solid var(--border);color:var(--heading)}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+    .btn svg{width:13px;height:13px;fill:currentColor}
+
+    /* ===== Honors / Awards ===== */
+    .award-list{list-style:none;margin:0;padding:0}
+    .award-list li{display:flex;gap:14px;align-items:flex-start;padding:13px 0;
+      border-bottom:1px dashed var(--border)}
+    .award-list li:last-child{border-bottom:none}
+    .award-date{flex:0 0 86px;font-weight:600;color:var(--accent);font-size:.9em;
+      font-variant-numeric:tabular-nums;padding-top:1px}
+    .award-body{flex:1}
+    .award-body .name{font-weight:600;color:var(--heading)}
+    .award-body .desc{color:var(--muted);font-size:.88em;margin-top:1px}
+    .award-body .note{color:var(--muted);font-size:.8em}
+
+    /* ===== Service ===== */
+    .service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+    .service-card{border:1px solid var(--border);border-radius:10px;padding:18px 20px;
+      box-shadow:var(--shadow)}
+    .service-card h3{margin:0 0 8px;font-size:1.02em}
+    .service-card p{color:var(--muted);font-size:.9em;margin:0;line-height:1.6}
+
+    /* ===== Beyond 卡片 ===== */
+    .beyond-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+    .beyond-card{border:1px solid var(--border);border-radius:12px;padding:20px;
+      box-shadow:var(--shadow);transition:.18s}
+    .beyond-card:hover{box-shadow:0 6px 18px rgba(0,0,0,.1);transform:translateY(-2px)}
+    .beyond-card .emoji{font-size:1.8em;line-height:1;margin-bottom:8px}
+    .beyond-card h3{margin:0 0 4px;font-size:1.05em}
+    .beyond-card .sub{color:var(--muted);font-size:.82em;font-weight:600;
+      letter-spacing:.4px;text-transform:uppercase;margin-bottom:10px}
+    .beyond-card ul{margin:0;padding:0;list-style:none}
+    .beyond-card ul li{font-size:.9em;color:var(--text);margin-bottom:6px;position:relative;
+      padding-left:16px}
+    .beyond-card ul li::before{content:"•";position:absolute;left:0;color:var(--accent);font-weight:700}
+    .beyond-card .quote{margin-top:12px;font-style:italic;color:var(--muted);font-size:.88em;
+      border-left:3px solid var(--accent);padding-left:12px}
+
+    /* ===== 教育时间线 ===== */
+    .edu-list{list-style:none;margin:0;padding:0}
+    .edu-list li{position:relative;padding:0 0 20px 30px;border-left:2px solid var(--border);
+      margin-left:7px}
+    .edu-list li:last-child{border-left-color:transparent}
+    .edu-list li::before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;
+      border-radius:50%;background:var(--accent);border:2px solid #fff;
+      box-shadow:0 0 0 2px var(--accent)}
+    .edu-period{font-weight:600;color:var(--accent);font-size:.9em}
+    .edu-degree{font-weight:700;color:var(--heading)}
+    .edu-school{color:var(--muted);font-size:.92em}
+
+    /* ===== 页脚 ===== */
+    footer{border-top:1px solid var(--border);padding:22px 20px 30px;color:var(--muted);
+      font-size:.88em;text-align:center}
+    footer .foot-inner{max-width:1080px;margin:0 auto}
+    footer .stats{margin-top:8px;font-size:.85em;color:var(--muted-light)}
+
+    /* ===== 返回顶部 ===== */
+    .to-top{position:fixed;right:22px;bottom:22px;width:42px;height:42px;border-radius:50%;
+      background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.1em;
+      box-shadow:0 4px 12px rgba(0,0,0,.18);opacity:0;pointer-events:none;transition:.2s;
+      display:flex;align-items:center;justify-content:center;z-index:99}
+    .to-top.show{opacity:1;pointer-events:auto}
+    .to-top:hover{background:#264a66}
+
+    .hidden{display:none !important}
+    .expand-btn{display:inline-block;margin:4px 0 12px;padding:7px 16px;border:1px solid var(--accent);border-radius:999px;background:var(--bg);color:var(--accent);font-size:.88em;font-weight:500;cursor:pointer;font-family:inherit;transition:.15s}
+    .expand-btn:hover{background:var(--accent);color:#fff}
+
+    @media (max-width:560px){
+      .author-avatar{width:120px;height:120px}
+      .author-name{font-size:1.55em}
+      .award-date{flex-basis:74px}
+      body{font-size:15px}
+    }
+  </style>
+</head>
+<body>
+<!-- ================= 顶部导航 ================= -->
+<header class="masthead">
+  <div class="masthead__inner">
+    <div class="site-title"><a href="#top">Runming Zou · 邹润明</a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="打开菜单">☰</button>
+    <nav class="nav" id="nav">
+      <a href="#about" class="active">About</a>
+      <a href="#news">News</a>
+      <a href="#publications">Publications</a>
+      <a href="#data">Data Sharing</a>
+      <a href="#honors">Honors</a>
+      <a href="#service">Service</a>
+      <a href="#education">Education</a>
+      <a href="#beyond">Beyond</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= 个人信息卡片 ================= -->
+  <section class="author-profile">
+    <div class="author-avatar">
+      <img src="images/avatar.jpg" alt="Runming Zou 证件照">
+    </div>
+    <div class="author-info">
+      <h1 class="author-name">Runming Zou <span style="font-size:.55em;font-weight:500;color:var(--muted)">邹润明</span></h1>
+      <p class="author-title">Ph.D. Student in Information and Communication Engineering</p>
+      <p class="author-location">National University of Defense Technology (NUDT), Changsha, China</p>
+      <div class="author-links">
+        <!-- TODO: 替换下面的链接地址 -->
+        <a href="mailto:nudtzrm@163.com"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>Email</a>
+        <a href="https://ieeexplore.ieee.org/author/37089989529"><svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>IEEE</a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>GitHub</a>
+        <a href="https://orcid.org/0009-0001-8477-1050"><svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>ORCID</a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>Google Scholar</a>
+      </div>
+      <p class="author-cite">Advisors: Prof. Yongqiang Cheng &amp; Associate Prof. Hao Wu</p>
+    </div>
+  </section>
+
+  <!-- ================= About ================= -->
+  <section id="about">
+    <div class="section-title"><span class="bar"></span><h2>About Me</h2></div>
+    <div class="intro-block">
+      <p class="intro-summary">
+        I am <strong>Runming Zou (邹润明)</strong>, a Ph.D. student in Information and Communication Engineering
+        at the <strong>National University of Defense Technology (NUDT)</strong>, Changsha, China, supervised by
+        Prof. Yongqiang Cheng and Associate Prof. Hao Wu. My research interests include <strong>statistical signal processing</strong>,
+        <strong>information geometry</strong> and <strong>radar signal processing</strong>, especially matrix information
+        geometry detection, space-time adaptive processing, and maritime target detection in heterogeneous environments.
+        In addition, distributed radar target detection and anti-jamming are also directions I am interested in.
+      </p>
+      <p class="intro-contact">I am open to discussions and collaborations. Feel free to reach me via <span>Email</span>: <span>nudtzrm@163.com</span>.</p>
+    </div>
+  </section>
+
+  <!-- ================= News ================= -->
+  <section id="news">
+    <div class="section-title"><span class="bar"></span><h2>News</h2></div>
+    <ul class="timeline" id="newsList">
+      <li><span class="date">2026</span><span class="text">在中国电子学会优博论坛作 <strong>Poster</strong> 报告。</span></li>
+      <li><span class="date">2026.04</span><span class="text">论文 <em>"A Target Detection Method for Multi-channel Radar in Heterogeneous Environment Based on Manifold Projection"</em> 被 IEEE TIM 接收。<span class="tag">New</span></span></li>
+      <li><span class="date">2026</span><span class="text">论文被 IEEE ICSPS 2026 接收（<strong>Oral</strong>，厦门）。</span></li>
+      <li><span class="date">2025</span><span class="text">在中国电子学会优博论坛作 <strong>Oral</strong> 报告。</span></li>
+      <li><span class="date">2025</span><span class="text">TAES 论文方法的低空无人机检测效果被 <a href="https://signal.ejournal.org.cn/article/doi/10.12466/xhcl.2025.06.001">何友院士文章《雷达海上目标检测技术研究进展》</a> 介绍。</span></li>
+      <li><span class="date">2025.05</span><span class="text">论文 <em>"A Two-step Space-time Adaptive Matrix Information Geometry Detector"</em> 发表于 <a href="https://doi.org/10.1109/TAES.2025.3566056">IEEE TAES</a>。</span></li>
+      <li><span class="date">2025</span><span class="text">发布低慢小无人机探测数据集 <strong>LSS-Ku-1.0</strong>（配套论文发表于《信号处理》）。</span></li>
+      <li><span class="date">2024.07</span><span class="text">论文 <em>"A Steering-Vector-Based Matrix Information Geometry Method"</em> 发表于 Remote Sensing（期刊推荐论文）。</span></li>
+      <li><span class="date">2024.07</span><span class="text">论文 <em>"Radar Target Detection in Heterogeneous Environment Based on HPD Manifold Clustering"</em> 发表于 IEEE GRSL。</span></li>
+      <li><span class="date">2024</span><span class="text">论文《基于流形滤波的海面微弱目标检测方法》发表于《信号处理》。</span></li>
+      <li><span class="date">2024</span><span class="text">论文被 IEEE ICSIDP 2024 接收（<strong>Poster</strong>，珠海）。</span></li>
+      <li><span class="date">2023</span><span class="text">论文被 IEEE ICSIP 2023 接收（<strong>Poster</strong>，无锡）。</span></li>
+      <li><span class="date">2023</span><span class="text">在 IEEE ICCC 作 <strong>Oral</strong> 学术报告。</span></li>
+    </ul>
+  </section>
+
+  <!-- ================= Publications ================= -->
+  <section id="publications">
+    <div class="section-title"><span class="bar"></span><h2>Publications</h2></div>
+
+    <!-- 分类标签：data-group 需与下方 pub-group 的 id 对应 -->
+    <div class="pub-tabs" id="pubTabs">
+      <button class="pub-tab active" data-group="pub-det">弱小目标检测</button>
+      <button class="pub-tab" data-group="pub-clu">非均匀强杂波抑制</button>
+      <button class="pub-tab" data-group="pub-tro">对流层散射通信</button>
+    </div>
+
+    <!-- 分类一：目标检测 -->
+    <div class="pub-group active" id="pub-det">
+      <ul class="pub-list">
+        <li class="pub-item">
+          <div class="pub-title">A Two-step Space-time Adaptive Matrix Information Geometry Detector for Multi-channel Radar</div>
+          <div class="pub-authors"><span class="me">R. Zou</span>, Y. Cheng, H. Wu, H. Wu, X. Hua</div>
+          <div class="pub-meta">IEEE Transactions on Aerospace and Electronic Systems, vol. 61, pp. 10960-10971, 2025</div>
+          <div class="pub-links"><a class="btn btn-solid" href="https://doi.org/10.1109/TAES.2025.3566056">Paper</a></div>
+        </li>
+        <li class="pub-item">
+          <div class="pub-title">A Steering-Vector-Based Matrix Information Geometry Method for Space-Time Adaptive Detection in Heterogeneous Environments</div>
+          <div class="pub-authors"><span class="me">R. Zou</span>, Y. Cheng, H. Wu, Z. Yang, X. Hua, H. Wu</div>
+          <div class="pub-meta">Remote Sensing, vol. 16, no. 12, pp. 2208, 2024 <span class="pub-badge hot">期刊推荐论文</span></div>
+          <div class="pub-links"><a class="btn btn-solid" href="https://doi.org/10.3390/rs16122208">Paper</a></div>
+        </li>
+        <li class="pub-item">
+          <div class="pub-title">基于流形滤波的海面微弱目标检测方法</div>
+          <div class="pub-authors"><span class="me">邹润明</span>, 程永强, 杨政 等</div>
+          <div class="pub-meta">信号处理, 第40卷(5): 853-864, 2024</div>
+          <div class="pub-links"><a class="btn btn-solid" href="https://doi.org/10.16798/j.issn.1003-0530.2024.05.005">Paper</a></div>
+        </li>
+        <li class="pub-item">
+          <div class="pub-title">地杂波背景下雷达低慢小无人机探测数据集（LSS-Ku-1.0）</div>
+          <div class="pub-authors">程永强, <span class="me">邹润明</span>, 陈嘉宜 等</div>
+          <div class="pub-meta">信号处理, 第41卷(5): 807-820, 2025</div>
+          <div class="pub-links"><a class="btn btn-solid" href="https://signal.ejournal.org.cn/article/doi/10.12466/xhcl.2025.05.003">Paper</a></div>
+        </li>
+        <li class="pub-item">
+          <div class="pub-title">Multi-Frame Track-Before-Detect Method of Airborne Multi-channel Radar in Weak Moving Target Detection</div>
+          <div class="pub-authors"><span class="me">R. Zou</span>, H. Wu, Y. Cheng, et al.</div>
+          <div class="pub-meta">IEEE International Conference on Signal Processing Systems (ICSPS), Xiamen, China, 2026</div>
+          <div class="pub-links"><a class="btn btn-outline" href="#">Paper</a></div>
+        </li>
+        <li class="pub-item">
+          <div class="pub-title">An Information Geometry Method for Space-time Adaptive Detection Based on KL Divergence</div>
+          <div class="pub-authors"><span class="me">R. Zou</span>, Y. Cheng, H. Wu, Z. Yang, H. Wu, X. Hua</div>
+          <div class="pub-meta">IEEE International Conference on Signal, Information and Data Processing (ICSIDP), Zhuhai, China, 2024</div>
+          <div class="pub-links"><a class="btn btn-solid" href="https://doi.org/10.1109/ICSIDP62679.2024.10868780">Paper</a></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 分类二：杂波抑制 -->
+    <div class="pub-group" id="pub-clu">
+      <ul class="pub-list">
+        <li class="pub-item">
+          <div class="pub-title">A Target Detection Method for Multi-channel Radar in Heterogeneous Environment Based on Manifold Projection</div>
+          <div class="pub-authors"><span class="me">R. Zou</span>, Y. Cheng, H. Wu, et al.</div>
+          <div class="pub-meta">IEEE Transactions on Instrumentation and Measurement, vol. 61, pp. 1-20, April 2026</div>
+          <div class="pub-links"><a class="btn btn-outline" href="#">Paper</a></div>
+        </li>
+        <li class="pub-item">
+          <div class="pub-title">Radar Target Detection in Heterogeneous Environment Based on HPD Manifold Clustering</div>
+          <div class="pub-authors"><span class="me">R. Zou</span>, Y. Cheng, H. Wu, H. Wu, X. Hua</div>
+          <div class="pub-meta">IEEE Geoscience and Remote Sensing Letters, vol. 21, pp. 1-5, 2024</div>
+          <div class="pub-links"><a class="btn btn-solid" href="https://doi.org/10.1109/LGRS.2024.3416346">Paper</a></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 分类三：对流层散射通信 -->
+    <div class="pub-group" id="pub-tro">
+      <ul class="pub-list">
+        <li class="pub-item">
+          <div class="pub-title">Joint Modeling and Simulation of Tropospheric Scattering Communication Channel Based on OPNET and MATLAB</div>
+          <div class="pub-authors"><span class="me">R. Zou</span>, A. Cheng, Y. Zhou, S. Cai, F. Li</div>
+          <div class="pub-meta">IEEE International Conference on Signal and Image Processing (ICSIP), Wuxi, China, 2023, pp. 893-899</div>
+          <div class="pub-links"><a class="btn btn-solid" href="https://doi.org/10.1109/ICSIP57908.2023.10270825">Paper</a></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= Data Sharing ================= -->
+  <section id="data">
+    <div class="section-title"><span class="bar"></span><h2>Data Sharing</h2></div>
+    <div class="service-grid">
+      <div class="service-card">
+        <h3>低慢小无人机探测数据集（LSS-Ku-1.0）</h3>
+        <p>地杂波背景下雷达低慢小（Low, Slow, Small）无人机探测数据集。配套论文发表于《信号处理》2025 年第 41 卷(5): 807-820。</p>
+        <p><a href="https://signal.ejournal.org.cn/article/doi/10.12466/xhcl.2025.05.003">论文链接</a> · <a href="https://www.xiaohongshu.com/discovery/item/6ab7c933000000001c01ca27?source=webshare&amp;xhsshare=pc_web&amp;xsec_token=ABHVslS3u9tRSVjkhS3vhOsDuVnEz26TI74iIQ5FTL2TM=&amp;xsec_source=pc_share">数据集介绍</a></p>
+      </div>
+      <div class="service-card">
+        <h3>Oryx-ISAC 分布式雷达探测数据</h3>
+        <p>分布式雷达探测（ISAC 通感一体化）数据集。</p>
+        <p><a href="https://www.xiaohongshu.com/discovery/item/6ab6394d0000000014003a5d?source=webshare&amp;xhsshare=pc_web&amp;xsec_token=ABEaeyk3dNQiTVwgBvVa2MKAMgW3T-A8MkeP0GU2L9ryM=&amp;xsec_source=pc_share">数据集介绍</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Honors ================= -->
+  <section id="honors">
+    <div class="section-title"><span class="bar"></span><h2>Honors &amp; Awards</h2></div>
+    <ul class="award-list">
+      <li><span class="award-date">2026</span><div class="award-body"><span class="name">Excellent Master's Thesis of NUDT</span> <span class="desc">优秀硕士学位论文</span></div></li>
+      <li><span class="award-date">2024</span><div class="award-body"><span class="name">Excellent Scholarship of NUDT</span> <span class="desc">国防科技大学优秀奖学金</span></div></li>
+      <li><span class="award-date">2019</span><div class="award-body"><span class="name">Outstanding Student Award of NUDT</span> <span class="desc">军事基础教育学院优秀学员</span></div></li>
+      <li><span class="award-date">2022</span><div class="award-body"><span class="name">Excellent Bachelor's Thesis of NUDT</span> <span class="desc">优秀本科毕业论文</span></div></li>
+      <li><span class="award-date">2021</span><div class="award-body"><span class="name">APS/AAS University Physics Competition · Silver Medal</span> <span class="desc">国际大学生物理竞赛银奖</span></div></li>
+      <li><span class="award-date">2021</span><div class="award-body"><span class="name">National Military Modeling Competition · First Prize</span> <span class="desc">全军军事建模竞赛一等奖</span></div></li>
+    </ul>
+  </section>
+
+  <!-- ================= Service ================= -->
+  <section id="service">
+    <div class="section-title"><span class="bar"></span><h2>Academic Service</h2></div>
+    <div class="service-grid">
+      <div class="service-card">
+        <h3>期刊审稿人</h3>
+        <p>IEEE Transactions on Aerospace and Electronic Systems · IEEE Transactions on Antennas and Propagation · Computer Science &amp; Technology · Current Medical Imaging</p>
+      </div>
+      <div class="service-card">
+        <h3>学术活动</h3>
+        <p>中国电子学会优博论坛（2026、2025）· IEEE ICSPS（2026）· IEEE ICSIDP（2024）· IEEE ICSIP（2023）· IEEE ICCC（2023）· 课程助教 - 雷达信号处理（2024, 2025）· 协助指导本科毕业论文（2023）</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Education ================= -->
+  <section id="education">
+    <div class="section-title"><span class="bar"></span><h2>Education</h2></div>
+    <ul class="edu-list">
+      <li>
+        <span class="edu-period">2025.01 — 至今</span><br>
+        <span class="edu-degree">Ph.D. Student · Information and Communication Engineering</span><br>
+        <span class="edu-school">College of Electronic Science and Technology, National University of Defense Technology (NUDT)</span>
+      </li>
+      <li>
+        <span class="edu-period">2022.09 — 2024.12</span><br>
+        <span class="edu-degree">M.E. · Information and Communication Engineering</span><br>
+        <span class="edu-school">College of Electronic Science and Technology, National University of Defense Technology (NUDT)</span>
+      </li>
+      <li>
+        <span class="edu-period">2018.09 — 2022.06</span><br>
+        <span class="edu-degree">B.E. · Communication Engineering</span><br>
+        <span class="edu-school">College of Information and Communication, National University of Defense Technology (NUDT) · supervised by Prof. Anchao Cheng</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ================= Beyond ================= -->
+  <section id="beyond">
+    <div class="section-title"><span class="bar"></span><h2>Beyond Research</h2></div>
+    <div class="beyond-grid">
+      <!-- TODO: 改成自己的业余爱好 -->
+      <div class="beyond-card">
+        <div class="emoji">🚢</div>
+        <h3>爱好</h3>
+        <div class="sub">Hobbies</div>
+        <ul><li>微缩比例模型（军模）</li><li>尤其 1/700、1/350 船模</li></ul>
+        <p class="quote">“不要碰蚀刻片”</p>
+      </div>
+      <div class="beyond-card">
+        <div class="emoji">🎮</div>
+        <h3>游戏</h3>
+        <div class="sub">Gaming</div>
+        <ul><li>战舰世界（World of Warships, WoWS）</li><li>DCS World（欢迎关注B站：432017231）</li></ul>
+        <p class="quote">“平静的海面培养不出优秀的水手”<br>“在教研室游玩体验更佳”</p>
+      </div>
+      <div class="beyond-card">
+        <div class="emoji">🧭</div>
+        <h3>旅行</h3>
+        <div class="sub">Wanderlust</div>
+        <ul><li>自驾探索未知目的地</li><li>偏爱山野徒步而非景点打卡</li></ul>
+        <p class="quote">“探索世界是人生的底层代码。”</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <div class="foot-inner">
+    © 2026 Runming Zou (邹润明)
+    <div class="stats">Last updated: 2025</div>
+  </div>
+</footer>
+
+<!-- 返回顶部 -->
+<button class="to-top" id="toTop" aria-label="返回顶部">↑</button>
+
+<script>
+  // 移动端菜单开关
+  var navToggle = document.getElementById('navToggle');
+  var nav = document.getElementById('nav');
+  navToggle.addEventListener('click', function () { nav.classList.toggle('open'); });
+  nav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { nav.classList.remove('open'); });
+  });
+
+  // Publications 分类标签切换
+  var tabs = document.querySelectorAll('.pub-tab');
+  var groups = document.querySelectorAll('.pub-group');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      groups.forEach(function (g) { g.classList.remove('active'); });
+      tab.classList.add('active');
+      var target = document.getElementById(tab.getAttribute('data-group'));
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // 返回顶部按钮 + 导航滚动高亮
+  var toTop = document.getElementById('toTop');
+  var sections = document.querySelectorAll('main section[id]');
+  var links = nav.querySelectorAll('a');
+  window.addEventListener('scroll', function () {
+    toTop.classList.toggle('show', window.scrollY > 400);
+    var current = '';
+    sections.forEach(function (s) {
+      if (window.scrollY >= s.offsetTop - 110) current = s.id;
+    });
+    links.forEach(function (l) {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  });
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 折叠展开功能：超过 maxVisible 的条目默认收起，点击按钮展开
+  function initCollapse(list, maxVisible) {
+    var items = list.children;
+    if (items.length <= maxVisible) return;
+    var btn = document.createElement('button');
+    btn.className = 'expand-btn';
+    var expanded = false;
+    function apply() {
+      for (var i = maxVisible; i < items.length; i++) {
+        items[i].classList.toggle('hidden', !expanded);
+      }
+      btn.textContent = expanded ? '收起' : '显示全部（' + items.length + '）';
+    }
+    btn.addEventListener('click', function () { expanded = !expanded; apply(); });
+    apply();
+    list.insertAdjacentElement('afterend', btn);
+  }
+
+  // News 默认显示前 7 条
+  initCollapse(document.getElementById('newsList'), 7);
+  // Publications 每个分类默认显示前 5 篇
+  document.querySelectorAll('.pub-list').forEach(function (ul) {
+    initCollapse(ul, 5);
+  });
+</script>
+</body>
+</html>
